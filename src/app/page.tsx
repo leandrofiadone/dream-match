@@ -1,15 +1,17 @@
-import Image from "next/image";
-import Footer from './components/Footer';
+// src/app/page.tsx
+import Image from "next/image"
+import Footer from "./components/Footer"
+import MainContainer from "./components/MainContainer"
 
- // Asegúrate de que la ruta sea correcta
-
-export default function Home() {
+const Home: React.FC = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-4 md:p-9">
-      {/* Tu contenido principal aquí */}
-
-      {/* Footer */}
+    <div className="flex flex-col min-h-screen">
+      <main className="flex-1 flex flex-col items-center justify-between p-4 md:p-9">
+        <MainContainer />
+      </main>
       <Footer />
-    </main>
+    </div>
   )
 }
+
+export default Home
