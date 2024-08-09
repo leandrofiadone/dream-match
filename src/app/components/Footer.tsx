@@ -8,7 +8,7 @@ export default function Footer() {
      
 
 
-        <span className="block text-xs">ATC - Dream Match</span>
+        <span className="block text-xl">ATC - Dream Match</span>
 
 
     </footer>
