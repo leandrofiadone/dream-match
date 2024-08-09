@@ -1,7 +1,7 @@
 // src/app/page.tsx
 import Image from "next/image"
 import Footer from "./components/Footer"
-import MainContainer from "./components/MainContainer"
+import MainContainer from "./pages/MainContainer"
 
 const Home: React.FC = () => {
   return (
