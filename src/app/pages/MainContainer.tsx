@@ -3,6 +3,7 @@
 
 import React, {useEffect, useState} from "react"
 import ContainerTeams from "../components/TeamSlots/ContainerTeams"
+import PlayerSearch from '../components/PlayerSearch'
 
 const MainContainer: React.FC = () => {
   
@@ -48,7 +49,7 @@ const MainContainer: React.FC = () => {
 
 
       <div className="hidden md:flex md:flex-1 md:w-1/3 p-4 bg-gray-200 rounded-md shadow-md">
-          <p>Partido</p>
+          <PlayerSearch/>
       </div>
 
 

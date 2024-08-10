@@ -2,6 +2,7 @@
 import Image from "next/image"
 import Footer from "./components/Footer"
 import MainContainer from "./pages/MainContainer"
+import PlayerSearch from './components/PlayerSearch'
 
 const Home: React.FC = () => {
   return (
