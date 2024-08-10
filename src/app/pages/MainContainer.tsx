@@ -42,10 +42,10 @@ const MainContainer: React.FC = () => {
 
 
   return (
-    <div className="flex flex-col w-full md:flex-row flex-1 gap-4 mt-5 mb-16 md:mb-5">
+    <div className="flex flex-col w-full md:flex-row flex-1 gap-4 mt-5 mb-12 md:mb-5">
 
       <ContainerTeams slots={firstContainerSlots} />
-      
+
 
       <div className="hidden md:flex md:flex-1 md:w-1/3 p-4 bg-gray-200 rounded-md shadow-md">
           <p>Partido</p>
