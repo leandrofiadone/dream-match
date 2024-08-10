@@ -25,7 +25,7 @@ const PlayerSearch = () => {
     setLoading(true)
     try {
       const response = await axios.get(
-        `https://apiv3.apifootball.com/?action=get_players&player_name=${playerName}&APIkey=${process.env.NEXT_PUBLIC_API_KEY}`
+        `/api/playerSearch?playerName=${playerName}`
       )
       const relevantData = response.data.map((player: any) => ({
         player_key: player.player_key,
