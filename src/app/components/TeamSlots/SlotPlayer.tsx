@@ -3,12 +3,18 @@ import React from "react"
 interface SlotPlayerProps {
   children: React.ReactNode
   className?: string
+  onClick?: () => void
 }
 
-const SlotPlayer: React.FC<SlotPlayerProps> = ({children, className}) => {
+const SlotPlayer: React.FC<SlotPlayerProps> = ({
+  children,
+  className,
+  onClick
+}) => {
   return (
     <div
-      className={`p-2 bg-slate-400 text-white rounded-md  ${className}`}>
+      onClick={onClick}
+      className={`p-2 bg-slate-400 text-white rounded-md cursor-pointer ${className}`}>
       {children}
     </div>
   )

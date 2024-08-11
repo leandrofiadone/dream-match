@@ -1,23 +1,27 @@
-
 "use client"
 
 import React, {useEffect, useState} from "react"
 import ContainerTeams from "../components/TeamSlots/ContainerTeams"
-import PlayerSearch from '../components/PlayerSearch'
+import Modal from "../components/Modal"
+import PlayerSearch from "../components/PlayerSearch"
 
 const MainContainer: React.FC = () => {
-  
   const [firstContainerSlots, setFirstContainerSlots] = useState<
     React.ReactNode[]
   >([])
   const [secondContainerSlots, setSecondContainerSlots] = useState<
     React.ReactNode[]
   >([])
+  const [selectedSlotIndex, setSelectedSlotIndex] = useState<number | null>(
+    null
+  )
+  const [selectedContainer, setSelectedContainer] = useState<
+    "first" | "second" | null
+  >(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
-    // Simular una llamada a una API para obtener los datos de los slots
     const fetchData = async () => {
-      // Aquí iría la lógica para obtener los datos de la API y luego actualizar los estados
       const dataForFirstContainer = [
         "Data 1",
         "Data 2",
@@ -40,20 +44,52 @@ const MainContainer: React.FC = () => {
     fetchData()
   }, [])
 
+  const handleSlotClick = (container: "first" | "second", index: number) => {
+    setSelectedSlotIndex(index)
+    setSelectedContainer(container)
+    setIsModalOpen(true)
+  }
 
+  const handlePlayerSelect = (player: React.ReactNode) => {
+    if (selectedSlotIndex !== null && selectedContainer !== null) {
+      if (selectedContainer === "first") {
+        const updatedSlots = [...firstContainerSlots]
+        updatedSlots[selectedSlotIndex] = player
+        setFirstContainerSlots(updatedSlots)
+      } else if (selectedContainer === "second") {
+        const updatedSlots = [...secondContainerSlots]
+        updatedSlots[selectedSlotIndex] = player
+        setSecondContainerSlots(updatedSlots)
+      }
+      // Reset selection after filling the slot
+      setSelectedSlotIndex(null)
+      setSelectedContainer(null)
+      setIsModalOpen(false)
+    }
+  }
 
   return (
     <div className="flex flex-col w-full md:flex-row flex-1 gap-4 mt-5 mb-12 md:mb-5">
-
-      <ContainerTeams slots={firstContainerSlots} />
-
+      <ContainerTeams
+        slots={firstContainerSlots}
+        onSlotClick={(index) => handleSlotClick("first", index)}
+      />
 
       <div className="hidden md:flex md:flex-1 md:w-1/3 p-4 bg-gray-200 rounded-md shadow-md">
-          <PlayerSearch/>
+        <p>Hola</p>
       </div>
 
+      <ContainerTeams
+        slots={secondContainerSlots}
+        onSlotClick={(index) => handleSlotClick("second", index)}
+      />
 
-      <ContainerTeams slots={secondContainerSlots} />
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <PlayerSearch
+          onPlayerSelect={handlePlayerSelect}
+          onClose={() => setIsModalOpen(false)}
+        />
+      </Modal>
     </div>
   )
 }
