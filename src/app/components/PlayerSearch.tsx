@@ -71,7 +71,7 @@ const handlePlayerClick = (player: Player) => {
   onPlayerSelect(
     <div className="flex">
       {player.player_image ? (
-        <div className="w-9 h-9 ml-3 relative rounded-full">
+        <div className="w-9 h-9 sm:w-14 sm:h-14 sm:mt-auto sm:mb-3 ml-3 relative rounded-full">
           <Image
             src={player.player_image}
             alt={player.player_name}
@@ -87,14 +87,14 @@ const handlePlayerClick = (player: Player) => {
         </div>
       )}
 
-      <div className="flex flex-col sm:flex-row mr-3 ml-auto">
+      <div className="flex flex-col  mr-3 ml-auto">
         <h2 className="text-sm font-semibold">
           {player.player_name} ({player.player_number})
         </h2>
 
-        <div className="flex flex-colsm:flex-row sm:ml-2">
-          <p className="text-xs text-gray-600">Team: {player.player_team}</p>
-          <div className="hidden sm:block sm:ml-4">
+        <div className="flex flex-col sm:text-center mt-auto">
+          <p className=" text-xs text-gray-600">Team: {player.player_team}</p>
+          <div className="hidden sm:block ">
             <p className="text-xs text-gray-600">
               Goals: {player.player_goals}
             </p>
