@@ -1,12 +1,10 @@
 "use client"
-
 import React, {useEffect, useState} from "react"
 import ContainerTeams from "../components/TeamSlots/ContainerTeams"
 import Modal from "../components/Modal"
 import PlayerSearch from "../components/PlayerSearch"
 
 const MainContainer: React.FC = () => {
-  
   const [firstContainerSlots, setFirstContainerSlots] = useState<
     React.ReactNode[]
   >([])
@@ -21,20 +19,29 @@ const MainContainer: React.FC = () => {
   >(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-
   useEffect(() => {
-    // Simula la carga de datos
-    setFirstContainerSlots(["Data 1", "Data 2", "Data 3", "Data 4", "Data 5"])
-    setSecondContainerSlots(["Data A", "Data B", "Data C", "Data D", "Data E"])
+    // Simula la carga de datos con slots numerados para agregar jugadores
+    setFirstContainerSlots([
+      "Agregar Jugador 1",
+      "Agregar Jugador 2",
+      "Agregar Jugador 3",
+      "Agregar Jugador 4",
+      "Agregar Jugador 5"
+    ])
+    setSecondContainerSlots([
+      "Agregar Jugador 1",
+      "Agregar Jugador 2",
+      "Agregar Jugador 3",
+      "Agregar Jugador 4",
+      "Agregar Jugador 5"
+    ])
   }, [])
-
 
   const handleSlotClick = (container: "first" | "second", index: number) => {
     setSelectedSlotIndex(index)
     setSelectedContainer(container)
     setIsModalOpen(true)
   }
-
 
   const handlePlayerSelect = (player: React.ReactNode) => {
     if (selectedSlotIndex !== null && selectedContainer) {
@@ -57,12 +64,12 @@ const MainContainer: React.FC = () => {
     }
   }
 
-
   return (
     <div className="flex flex-col w-full md:flex-row flex-1 gap-4 mt-5 mb-12 md:mb-5">
       <ContainerTeams
         slots={firstContainerSlots}
         onSlotClick={(index) => handleSlotClick("first", index)}
+        colorClass="bg-blue-100" // Agrega una clase diferente para el primer contenedor
       />
 
       <div className="hidden md:flex md:flex-1 md:w-1/3 p-4 bg-gray-200 rounded-md shadow-md">
@@ -72,6 +79,7 @@ const MainContainer: React.FC = () => {
       <ContainerTeams
         slots={secondContainerSlots}
         onSlotClick={(index) => handleSlotClick("second", index)}
+        colorClass="bg-green-100" // Agrega una clase diferente para el segundo contenedor
       />
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>

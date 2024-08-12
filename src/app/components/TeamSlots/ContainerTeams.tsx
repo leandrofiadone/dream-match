@@ -1,16 +1,20 @@
+"use client"
 import React from "react"
 import SlotPlayer from "./SlotPlayer"
 
 interface ContainerTeamsProps {
   slots: React.ReactNode[]
   onSlotClick: (index: number) => void
+  colorClass: string // Agrega esta propiedad
 }
 
 const ContainerTeams: React.FC<ContainerTeamsProps> = ({
   slots,
-  onSlotClick
+  onSlotClick,
+  colorClass
 }) => (
-  <div className="flex flex-col flex-1 p-1 bg-gray-100 rounded-md shadow-md gap-1">
+  <div
+    className={`flex flex-col flex-1 p-1 rounded-md shadow-md gap-1 ${colorClass}`}>
     {slots.map((slot, index) => (
       <SlotPlayer
         key={index}
