@@ -71,7 +71,7 @@ const handlePlayerClick = (player: Player) => {
   onPlayerSelect(
     <div className="flex">
       {player.player_image ? (
-        <div className="w-9 h-9 sm:w-14 sm:h-14 sm:mt-auto sm:mb-3 ml-5 relative rounded-full">
+        <div className="w-9 h-9 sm:w-14 sm:h-14 sm:mt-auto sm:mb-3 sm:ml-3 ml-5 relative rounded-full">
           <Image
             src={player.player_image}
             alt={player.player_name}
@@ -87,7 +87,7 @@ const handlePlayerClick = (player: Player) => {
         </div>
       )}
 
-      <div className="flex flex-col  mr-6 ml-auto ">
+      <div className="flex flex-col sm:mr-auto  mr-6 ml-auto ">
         <h2 className="text-sm font-semibold">
           {player.player_name} ({player.player_number})
         </h2>
