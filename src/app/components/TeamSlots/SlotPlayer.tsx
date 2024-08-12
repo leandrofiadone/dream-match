@@ -14,7 +14,7 @@ const SlotPlayer: React.FC<SlotPlayerProps> = ({
   return (
     <div
       onClick={onClick}
-      className={`p-2 bg-slate-400 text-white rounded-md cursor-pointer ${className}`}>
+      className={`p-2  bg-slate-400 text-white rounded-lg cursor-pointer ${className}`}>
       {children}
     </div>
   )

@@ -68,41 +68,50 @@ const handleSearch = async () => {
 
 
 const handlePlayerClick = (player: Player) => {
-        {
-          /* Jugador seleccionado - PRINCIPIO */
-        }
-    onPlayerSelect(
-        <div className="flex items-start p-4">
-            {player.player_image ? (
-                <Image
-                src={player.player_image}
-                alt={player.player_name}
-                width={100}
-                height={100}
-                priority
-                className="rounded-full mr-4"
-                onError={handleImageError}
-                    />
-            ) : (
-            <div className="flex justify-center items-center w-24 h-24 bg-gray-200 rounded-full mr-4">
-            <FaUserAlt size={48} className="text-gray-500" />
-            </div>
-            )}
-        <div>
-                <h2 className="text-xl font-semibold">
-                {player.player_name} ({player.player_number})
-                </h2>
-                <p className="text-gray-600">Team: {player.player_team}</p>
-                <p className="text-gray-600">Goals: {player.player_goals}</p>
-                <p className="text-gray-600">Assists: {player.player_assists}</p>
-                <p className="text-gray-600">Rating: {player.player_rating}</p>
+  onPlayerSelect(
+    <div className="flex">
+      {player.player_image ? (
+        <div className="w-9 h-9 ml-3 relative rounded-full">
+          <Image
+            src={player.player_image}
+            alt={player.player_name}
+            layout="fill"
+            objectFit="cover"
+            className="rounded-full"
+            onError={handleImageError}
+          />
         </div>
+      ) : (
+        <div className="flex justify-center items-center w-9 h-9 ml-3 bg-gray-200 rounded-full">
+          <FaUserAlt size={24} className="text-gray-500" />
+        </div>
+      )}
 
-        {/* Jugador seleccionado - FIN */}
+      <div className="flex flex-col sm:flex-row mr-3 ml-auto">
+        <h2 className="text-sm font-semibold">
+          {player.player_name} ({player.player_number})
+        </h2>
+
+        <div className="flex flex-colsm:flex-row sm:ml-2">
+          <p className="text-xs text-gray-600">Team: {player.player_team}</p>
+          <div className="hidden sm:block sm:ml-4">
+            <p className="text-xs text-gray-600">
+              Goals: {player.player_goals}
+            </p>
+            <p className="text-xs text-gray-600">
+              Assists: {player.player_assists}
+            </p>
+            <p className="text-xs text-gray-600">
+              Rating: {player.player_rating}
+            </p>
+          </div>
         </div>
-    )
+      </div>
+    </div>
+  )
   onClose()
 }
+
 
 
 
