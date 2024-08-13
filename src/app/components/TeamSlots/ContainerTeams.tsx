@@ -6,6 +6,7 @@ interface ContainerTeamsProps {
   slots: React.ReactNode[]
   onSlotClick: (index: number) => void
   colorClass: string // Agrega esta propiedad
+  title: string
 }
 
 const ContainerTeams: React.FC<ContainerTeamsProps> = ({

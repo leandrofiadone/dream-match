@@ -5,81 +5,127 @@ import Modal from "../components/Modal"
 import PlayerSearch from "../components/PlayerSearch"
 
 const MainContainer: React.FC = () => {
-  const [firstContainerSlots, setFirstContainerSlots] = useState<
-    React.ReactNode[]
-  >([])
-  const [secondContainerSlots, setSecondContainerSlots] = useState<
-    React.ReactNode[]
-  >([])
+  const [teamOneSlots, setTeamOneSlots] = useState<React.ReactNode[]>([])
+  const [teamTwoSlots, setTeamTwoSlots] = useState<React.ReactNode[]>([])
   const [selectedSlotIndex, setSelectedSlotIndex] = useState<number | null>(
     null
   )
-  const [selectedContainer, setSelectedContainer] = useState<
-    "first" | "second" | null
+  const [selectedTeam, setSelectedTeam] = useState<
+    "teamOne" | "teamTwo" | null
   >(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
-    // Simula la carga de datos con slots numerados para agregar jugadores
-    setFirstContainerSlots([
-      "Agregar Jugador 1",
-      "Agregar Jugador 2",
-      "Agregar Jugador 3",
-      "Agregar Jugador 4",
-      "Agregar Jugador 5"
-    ])
-    setSecondContainerSlots([
-      "Agregar Jugador 1",
-      "Agregar Jugador 2",
-      "Agregar Jugador 3",
-      "Agregar Jugador 4",
-      "Agregar Jugador 5"
-    ])
+    setTeamOneSlots(new Array(5).fill("Agregar Jugador"))
+    setTeamTwoSlots(new Array(5).fill("Agregar Jugador"))
   }, [])
 
-  const handleSlotClick = (container: "first" | "second", index: number) => {
+  const handleSlotClick = (team: "teamOne" | "teamTwo", index: number) => {
     setSelectedSlotIndex(index)
-    setSelectedContainer(container)
+    setSelectedTeam(team)
     setIsModalOpen(true)
   }
 
   const handlePlayerSelect = (player: React.ReactNode) => {
-    if (selectedSlotIndex !== null && selectedContainer) {
-      // Copia el arreglo de slots del contenedor seleccionado
+    if (selectedSlotIndex !== null && selectedTeam) {
       const updatedSlots =
-        selectedContainer === "first"
-          ? [...firstContainerSlots]
-          : [...secondContainerSlots]
-
-      // Actualiza el slot y el estado correspondiente
+        selectedTeam === "teamOne" ? [...teamOneSlots] : [...teamTwoSlots]
       updatedSlots[selectedSlotIndex] = player
-      selectedContainer === "first"
-        ? setFirstContainerSlots(updatedSlots)
-        : setSecondContainerSlots(updatedSlots)
+      selectedTeam === "teamOne"
+        ? setTeamOneSlots(updatedSlots)
+        : setTeamTwoSlots(updatedSlots)
 
-      // Resetea selección y cierra el modal
       setSelectedSlotIndex(null)
-      setSelectedContainer(null)
+      setSelectedTeam(null)
       setIsModalOpen(false)
     }
   }
 
+  const countFilledSlots = (slots: React.ReactNode[]): number =>
+    slots.filter((slot) => typeof slot !== "string").length
+
+  const getProgress = (filledSlots: number, totalSlots: number) =>
+    (filledSlots / totalSlots) * 100
+
+  const ProgressBar: React.FC<{progress: number; colorClass: string}> = ({
+    progress,
+    colorClass
+  }) => (
+    <div className="w-full bg-gray-300 rounded-full h-3">
+      <div
+        className={`h-3 rounded-full ${colorClass}`}
+        style={{width: `${progress}%`}}></div>
+    </div>
+  )
+
+  const teamOneFilledSlots = countFilledSlots(teamOneSlots)
+  const teamTwoFilledSlots = countFilledSlots(teamTwoSlots)
+  const totalFilledSlots = teamOneFilledSlots + teamTwoFilledSlots
+
+  const teamOneRemainingSlots = teamOneSlots.length - teamOneFilledSlots
+  const teamTwoRemainingSlots = teamTwoSlots.length - teamTwoFilledSlots
+  const totalRemainingSlots = teamOneRemainingSlots + teamTwoRemainingSlots
+
   return (
     <div className="flex flex-col w-full md:flex-row flex-1 gap-4 mt-5 mb-12 md:mb-5">
       <ContainerTeams
-        slots={firstContainerSlots}
-        onSlotClick={(index) => handleSlotClick("first", index)}
-        colorClass="bg-blue-100" // Agrega una clase diferente para el primer contenedor
+        slots={teamOneSlots}
+        onSlotClick={(index) => handleSlotClick("teamOne", index)}
+        colorClass="bg-blue-100"
+        title="Equipo 1"
       />
 
-      <div className="hidden md:flex md:flex-1 md:w-1/3 p-4 bg-gray-200 rounded-md shadow-md">
-        <p>Hola</p>
+      <div className="hidden md:flex md:flex-1 md:w-1/3 p-4 bg-gray-200 rounded-md shadow-md flex-col items-center justify-center">
+        {totalFilledSlots > 0 ? (
+          <>
+            <div className="mb-4 text-center">
+              <p className="font-bold text-xl">Progreso de los Equipos</p>
+            </div>
+            <div className="mb-4 w-full">
+              <p className="font-medium text-lg">
+                Equipo 1: {teamOneRemainingSlots} jugadores faltantes
+              </p>
+              <ProgressBar
+                progress={getProgress(teamOneFilledSlots, teamOneSlots.length)}
+                colorClass="bg-blue-500"
+              />
+            </div>
+            <div className="mb-4 w-full">
+              <p className="font-medium text-lg">
+                Equipo 2: {teamTwoRemainingSlots} jugadores faltantes
+              </p>
+              <ProgressBar
+                progress={getProgress(teamTwoFilledSlots, teamTwoSlots.length)}
+                colorClass="bg-green-500"
+              />
+            </div>
+            <div className="w-full">
+              <p className="font-medium text-lg">
+                Total: {totalRemainingSlots} jugadores faltantes
+              </p>
+              <ProgressBar
+                progress={getProgress(
+                  totalFilledSlots,
+                  teamOneSlots.length + teamTwoSlots.length
+                )}
+                colorClass="bg-purple-500"
+              />
+            </div>
+          </>
+        ) : (
+          <div className="mt-4">
+            <p className="font-bold text-green-600">
+              ¡Todos los equipos están completos!
+            </p>
+          </div>
+        )}
       </div>
 
       <ContainerTeams
-        slots={secondContainerSlots}
-        onSlotClick={(index) => handleSlotClick("second", index)}
-        colorClass="bg-green-100" // Agrega una clase diferente para el segundo contenedor
+        slots={teamTwoSlots}
+        onSlotClick={(index) => handleSlotClick("teamTwo", index)}
+        colorClass="bg-green-100"
+        title="Equipo 2"
       />
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
