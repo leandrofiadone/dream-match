@@ -8,7 +8,8 @@ const nextConfig = {
         port: "",
         pathname: "/badges/players/**" // Permite todas las rutas bajo "/badges/players/"
       }
-    ]
+    ],
+    unoptimized: true
   }
 }
 
