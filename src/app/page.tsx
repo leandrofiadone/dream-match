@@ -23,8 +23,8 @@ const Home: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col min-h-full">
-      <main className="flex-1 mb-6 flex flex-col absolute inset-0 items-center justify-between p-4 md:p-9">
+    <div className="flex flex-col min-h-full ">
+      <main className="flex-1 mb-6 flex flex-col absolute inset-0 items-center justify-between p-4 md:p-9 custom-bg-gradient">
         <MainContainer onProgressUpdate={handleProgressUpdate} />
       </main>
       {/* Only show footer on mobile */}
