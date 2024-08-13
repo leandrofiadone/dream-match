@@ -4,6 +4,63 @@ import ContainerTeams from "../components/TeamSlots/ContainerTeams"
 import Modal from "../components/Modal"
 import PlayerSearch from "../components/PlayerSearch"
 
+const ProgressBar: React.FC<{progress: number; colorClass: string}> = ({
+  progress,
+  colorClass
+}) => (
+  <div className="w-full bg-gray-300 rounded-full h-3">
+    <div
+      className={`h-3 rounded-full ${colorClass}`}
+      style={{width: `${progress}%`}}></div>
+  </div>
+)
+
+const ProgressSummary: React.FC<{
+  teamOneProgress: number
+  teamTwoProgress: number
+  totalProgress: number
+  teamOneComplete: boolean
+  teamTwoComplete: boolean
+}> = ({
+  teamOneProgress,
+  teamTwoProgress,
+  totalProgress,
+  teamOneComplete,
+  teamTwoComplete
+}) => {
+  const shouldShowProgress =
+    teamOneProgress > 0 || teamTwoProgress > 0 || totalProgress > 0
+  const bothTeamsComplete = teamOneComplete && teamTwoComplete
+
+  return (
+    <div className="hidden md:flex md:flex-1 md:w-1/3 p-4 bg-gray-200 rounded-md shadow-md flex-col items-center justify-center">
+      <div className="mb-4 text-center">
+        <p className="font-bold text-xl">Atc Dream Match</p>
+      </div>
+      {bothTeamsComplete ? (
+        <div className="text-2xl font-bold text-green-600">
+          ¡Los dos equipos están completos y listos para jugar!
+        </div>
+      ) : shouldShowProgress ? (
+        <>
+          <div className="mb-4 w-full">
+            <p className="font-medium text-lg">Equipo 1</p>
+            <ProgressBar progress={teamOneProgress} colorClass="bg-blue-500" />
+          </div>
+          <div className="mb-4 w-full">
+            <p className="font-medium text-lg">Equipo 2</p>
+            <ProgressBar progress={teamTwoProgress} colorClass="bg-green-500" />
+          </div>
+          <div className="w-full">
+            <p className="font-medium text-lg">Total</p>
+            <ProgressBar progress={totalProgress} colorClass="bg-purple-500" />
+          </div>
+        </>
+      ) : null}
+    </div>
+  )
+}
+
 const MainContainer: React.FC = () => {
   const [teamOneSlots, setTeamOneSlots] = useState<React.ReactNode[]>([])
   const [teamTwoSlots, setTeamTwoSlots] = useState<React.ReactNode[]>([])
@@ -47,17 +104,6 @@ const MainContainer: React.FC = () => {
   const getProgress = (filledSlots: number, totalSlots: number) =>
     (filledSlots / totalSlots) * 100
 
-  const ProgressBar: React.FC<{progress: number; colorClass: string}> = ({
-    progress,
-    colorClass
-  }) => (
-    <div className="w-full bg-gray-300 rounded-full h-3">
-      <div
-        className={`h-3 rounded-full ${colorClass}`}
-        style={{width: `${progress}%`}}></div>
-    </div>
-  )
-
   const teamOneFilledSlots = countFilledSlots(teamOneSlots)
   const teamTwoFilledSlots = countFilledSlots(teamTwoSlots)
   const totalFilledSlots = teamOneFilledSlots + teamTwoFilledSlots
@@ -65,6 +111,9 @@ const MainContainer: React.FC = () => {
   const teamOneRemainingSlots = teamOneSlots.length - teamOneFilledSlots
   const teamTwoRemainingSlots = teamTwoSlots.length - teamTwoFilledSlots
   const totalRemainingSlots = teamOneRemainingSlots + teamTwoRemainingSlots
+
+  const teamOneComplete = teamOneRemainingSlots === 0
+  const teamTwoComplete = teamTwoRemainingSlots === 0
 
   return (
     <div className="flex flex-col w-full md:flex-row flex-1 gap-4 mt-5 mb-12 md:mb-5">
@@ -75,51 +124,16 @@ const MainContainer: React.FC = () => {
         title="Equipo 1"
       />
 
-      <div className="hidden md:flex md:flex-1 md:w-1/3 p-4 bg-gray-200 rounded-md shadow-md flex-col items-center justify-center">
-        {totalFilledSlots > 0 ? (
-          <>
-            <div className="mb-4 text-center">
-              <p className="font-bold text-xl">Progreso de los Equipos</p>
-            </div>
-            <div className="mb-4 w-full">
-              <p className="font-medium text-lg">
-                Equipo 1: {teamOneRemainingSlots} jugadores faltantes
-              </p>
-              <ProgressBar
-                progress={getProgress(teamOneFilledSlots, teamOneSlots.length)}
-                colorClass="bg-blue-500"
-              />
-            </div>
-            <div className="mb-4 w-full">
-              <p className="font-medium text-lg">
-                Equipo 2: {teamTwoRemainingSlots} jugadores faltantes
-              </p>
-              <ProgressBar
-                progress={getProgress(teamTwoFilledSlots, teamTwoSlots.length)}
-                colorClass="bg-green-500"
-              />
-            </div>
-            <div className="w-full">
-              <p className="font-medium text-lg">
-                Total: {totalRemainingSlots} jugadores faltantes
-              </p>
-              <ProgressBar
-                progress={getProgress(
-                  totalFilledSlots,
-                  teamOneSlots.length + teamTwoSlots.length
-                )}
-                colorClass="bg-purple-500"
-              />
-            </div>
-          </>
-        ) : (
-          <div className="mt-4">
-            <p className="font-bold text-green-600">
-              ¡Todos los equipos están completos!
-            </p>
-          </div>
+      <ProgressSummary
+        teamOneProgress={getProgress(teamOneFilledSlots, teamOneSlots.length)}
+        teamTwoProgress={getProgress(teamTwoFilledSlots, teamTwoSlots.length)}
+        totalProgress={getProgress(
+          totalFilledSlots,
+          teamOneSlots.length + teamTwoSlots.length
         )}
-      </div>
+        teamOneComplete={teamOneComplete}
+        teamTwoComplete={teamTwoComplete}
+      />
 
       <ContainerTeams
         slots={teamTwoSlots}
