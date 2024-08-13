@@ -27,12 +27,14 @@ const Home: React.FC = () => {
       <main className="flex-1 mb-6 flex flex-col absolute inset-0 items-center justify-between p-4 md:p-9">
         <MainContainer onProgressUpdate={handleProgressUpdate} />
       </main>
+      {/* Only show footer on mobile */}
       <Footer
         teamOneProgress={teamOneProgress}
         teamTwoProgress={teamTwoProgress}
         totalProgress={totalProgress}
         teamOneComplete={teamOneComplete}
         teamTwoComplete={teamTwoComplete}
+        className="block md:hidden" // Agrega la clase aquí
       />
     </div>
   )

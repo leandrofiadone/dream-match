@@ -6,6 +6,7 @@ interface FooterProps {
   totalProgress: number
   teamOneComplete: boolean
   teamTwoComplete: boolean
+  className?: string // Agrega la prop className opcional
 }
 
 const ProgressBar: React.FC<{progress: number; colorClass: string}> = ({
@@ -24,7 +25,8 @@ const Footer: React.FC<FooterProps> = ({
   teamTwoProgress,
   totalProgress,
   teamOneComplete,
-  teamTwoComplete
+  teamTwoComplete,
+  className // Desestructura className
 }) => {
   // Verifica si todas las barras de progreso están completas
   const allComplete =
@@ -32,7 +34,8 @@ const Footer: React.FC<FooterProps> = ({
 
   if (allComplete) {
     return (
-      <footer className="fixed bottom-0 left-0 w-full bg-gray-800 text-white p-1 flex flex-col items-center">
+      <footer
+        className={`fixed bottom-0 left-0 w-full bg-gray-800 text-white p-1 flex flex-col items-center ${className}`}>
         <p className="text-2xl font-semibold">¡Todo listo para jugar! ⚽</p>
       </footer>
     )
@@ -43,7 +46,8 @@ const Footer: React.FC<FooterProps> = ({
     teamOneProgress > 0 || teamTwoProgress > 0 || totalProgress > 0
 
   return (
-    <footer className="fixed bottom-0 left-0 w-full bg-gray-800 text-white p-1 flex flex-col items-center">
+    <footer
+      className={`fixed bottom-0 left-0 w-full bg-gray-800 text-white p-1 flex flex-col items-center ${className}`}>
       {hasProgress ? (
         <div className="w-full flex flex-col">
           {/* Información de los equipos */}
