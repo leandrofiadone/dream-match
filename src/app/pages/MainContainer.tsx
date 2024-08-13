@@ -34,7 +34,7 @@ const ProgressSummary: React.FC<{
   return (
     <div className="hidden md:flex md:flex-1 md:w-1/3 p-4 bg-gray-200 rounded-md shadow-md flex-col items-center justify-center">
       <div className="mb-4 text-center">
-        <p className="font-bold text-xl">Atc Dream Match</p>
+        <p className="font-bold text-xl">Atc Dream Match ⚽</p>
       </div>
       {bothTeamsComplete ? (
         <div className="text-2xl font-bold text-green-600">
