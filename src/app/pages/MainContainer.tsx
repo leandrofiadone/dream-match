@@ -1,4 +1,3 @@
-"use client"
 import React, {useEffect, useState} from "react"
 import ContainerTeams from "../components/TeamSlots/ContainerTeams"
 import Modal from "../components/Modal"
@@ -61,7 +60,12 @@ const ProgressSummary: React.FC<{
   )
 }
 
-const MainContainer: React.FC = () => {
+const MainContainer: React.FC<{
+  onProgressUpdate: (
+    teamOne: {progress: number; complete: boolean},
+    teamTwo: {progress: number; complete: boolean}
+  ) => void
+}> = ({onProgressUpdate}) => {
   const [teamOneSlots, setTeamOneSlots] = useState<React.ReactNode[]>([])
   const [teamTwoSlots, setTeamTwoSlots] = useState<React.ReactNode[]>([])
   const [selectedSlotIndex, setSelectedSlotIndex] = useState<number | null>(
@@ -76,6 +80,30 @@ const MainContainer: React.FC = () => {
     setTeamOneSlots(new Array(5).fill("Agregar Jugador"))
     setTeamTwoSlots(new Array(5).fill("Agregar Jugador"))
   }, [])
+
+  useEffect(() => {
+    const teamOneFilledSlots = countFilledSlots(teamOneSlots)
+    const teamTwoFilledSlots = countFilledSlots(teamTwoSlots)
+    const totalFilledSlots = teamOneFilledSlots + teamTwoFilledSlots
+
+    const teamOneRemainingSlots = teamOneSlots.length - teamOneFilledSlots
+    const teamTwoRemainingSlots = teamTwoSlots.length - teamTwoFilledSlots
+    const totalRemainingSlots = teamOneRemainingSlots + teamTwoRemainingSlots
+
+    const teamOneComplete = teamOneRemainingSlots === 0
+    const teamTwoComplete = teamTwoRemainingSlots === 0
+
+    onProgressUpdate(
+      {
+        progress: getProgress(teamOneFilledSlots, teamOneSlots.length),
+        complete: teamOneComplete
+      },
+      {
+        progress: getProgress(teamTwoFilledSlots, teamTwoSlots.length),
+        complete: teamTwoComplete
+      }
+    )
+  }, [teamOneSlots, teamTwoSlots, onProgressUpdate])
 
   const handleSlotClick = (team: "teamOne" | "teamTwo", index: number) => {
     setSelectedSlotIndex(index)
@@ -104,17 +132,6 @@ const MainContainer: React.FC = () => {
   const getProgress = (filledSlots: number, totalSlots: number) =>
     (filledSlots / totalSlots) * 100
 
-  const teamOneFilledSlots = countFilledSlots(teamOneSlots)
-  const teamTwoFilledSlots = countFilledSlots(teamTwoSlots)
-  const totalFilledSlots = teamOneFilledSlots + teamTwoFilledSlots
-
-  const teamOneRemainingSlots = teamOneSlots.length - teamOneFilledSlots
-  const teamTwoRemainingSlots = teamTwoSlots.length - teamTwoFilledSlots
-  const totalRemainingSlots = teamOneRemainingSlots + teamTwoRemainingSlots
-
-  const teamOneComplete = teamOneRemainingSlots === 0
-  const teamTwoComplete = teamTwoRemainingSlots === 0
-
   return (
     <div className="flex flex-col w-full md:flex-row flex-1 gap-4 mt-5 mb-12 md:mb-5">
       <ContainerTeams
@@ -125,14 +142,20 @@ const MainContainer: React.FC = () => {
       />
 
       <ProgressSummary
-        teamOneProgress={getProgress(teamOneFilledSlots, teamOneSlots.length)}
-        teamTwoProgress={getProgress(teamTwoFilledSlots, teamTwoSlots.length)}
+        teamOneProgress={getProgress(
+          countFilledSlots(teamOneSlots),
+          teamOneSlots.length
+        )}
+        teamTwoProgress={getProgress(
+          countFilledSlots(teamTwoSlots),
+          teamTwoSlots.length
+        )}
         totalProgress={getProgress(
-          totalFilledSlots,
+          countFilledSlots(teamOneSlots) + countFilledSlots(teamTwoSlots),
           teamOneSlots.length + teamTwoSlots.length
         )}
-        teamOneComplete={teamOneComplete}
-        teamTwoComplete={teamTwoComplete}
+        teamOneComplete={teamOneSlots.length === countFilledSlots(teamOneSlots)}
+        teamTwoComplete={teamTwoSlots.length === countFilledSlots(teamTwoSlots)}
       />
 
       <ContainerTeams
