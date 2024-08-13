@@ -14,7 +14,7 @@ const SlotPlayer: React.FC<SlotPlayerProps> = ({
   return (
     <div
       onClick={onClick}
-      className={`p-2  bg-slate-400 hover:bg-opacity-65 bg-opacity-35 text-white rounded-lg cursor-pointer ${className}`}>
+      className={`p-2  bg-slate-400 hover:bg-opacity-75 border  bg-opacity-55 text-white rounded-lg cursor-pointer ${className}`}>
       {children}
     </div>
   )
