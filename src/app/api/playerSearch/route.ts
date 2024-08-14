@@ -9,7 +9,15 @@ export async function GET(request: NextRequest) {
     const response = await axios.get(
       `https://apiv3.apifootball.com/?action=get_players&player_name=${playerName}&APIkey=${process.env.SECRET_API_KEY}`
     )
-    return new Response(JSON.stringify(response.data), {status: 200})
+
+    // Ordenar jugadores por rating (siendo los sin rating al final)
+    const players = response.data.sort((a: any, b: any) => {
+      const ratingA = parseFloat(a.player_rating) || 0
+      const ratingB = parseFloat(b.player_rating) || 0
+      return ratingB - ratingA
+    })
+
+    return new Response(JSON.stringify(players), {status: 200})
   } catch (error) {
     return new Response(JSON.stringify({error: "Error fetching player data"}), {
       status: 500
