@@ -15,7 +15,7 @@ const ContainerTeams: React.FC<ContainerTeamsProps> = ({
   colorClass
 }) => (
   <div
-    className={`flex flex-col flex-1 p-1 rounded-md shadow-md gap-1 bg-opacity-25  ${colorClass}`}>
+    className={`flex flex-col flex-1 p-1 rounded-md shadow-md gap-1 sm:gap-2 bg-opacity-25 sm:border ${colorClass}`}>
     {slots.map((slot, index) => (
       <SlotPlayer
         key={index}
