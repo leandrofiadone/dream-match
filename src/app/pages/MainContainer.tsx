@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import ContainerTeams from "../components/TeamSlots/ContainerTeams"
 import Modal from "../components/Modal"
-import PlayerSearch from "../components/PlayerSearch"
+import PlayerSearch from "../components/PlayerSearch/PlayerSearch"
 
 const ProgressBar: React.FC<{progress: number; colorClass: string}> = ({
   progress,
