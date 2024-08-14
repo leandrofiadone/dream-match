@@ -42,9 +42,3 @@ Para correr el proyecto en local, sigue estos pasos:
 4. Abre [http://localhost:3000](http://localhost:3000) en tu navegador para ver la aplicación.
 
 
-bash
-Copiar código
-npm run dev
-# o
-yarn dev
-Abre http://localhost:3000 en tu navegador para ver la aplicación.
