@@ -76,7 +76,7 @@ const PlayerSearch: React.FC<PlayerSearchProps> = ({
             />
           </div>
         ) : (
-          <div className="flex justify-center items-center w-9 h-9 sm:ml-3 ml-5 bg-gray-200 rounded-full">
+          <div className="flex justify-center items-center w-9 h-9 sm:w-14 sm:h-14 lg:ml-5 lg:w-18 lg:h-18 sm:ml-3 ml-5 bg-gray-200 rounded-full">
             <FaUserAlt size={24} className="text-gray-500" />
           </div>
         )}

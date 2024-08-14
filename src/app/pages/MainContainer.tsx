@@ -7,9 +7,9 @@ const ProgressBar: React.FC<{progress: number; colorClass: string}> = ({
   progress,
   colorClass
 }) => (
-  <div className="w-full bg-gray-300 rounded-full h-3">
+  <div className="w-full bg-gray-300 rounded-full h-2">
     <div
-      className={`h-3 rounded-full ${colorClass}`}
+      className={`h-2 rounded-full ${colorClass}`}
       style={{width: `${progress}%`}}></div>
   </div>
 )
@@ -37,22 +37,22 @@ const ProgressSummary: React.FC<{
         <p className="font-bold text-xl">Atc Dream Match ⚽</p>
       </div>
       {bothTeamsComplete ? (
-        <div className="text-2xl font-bold text-green-600">
+        <div className="text-2xl font-bold text-green-600 ">
           ¡Los dos equipos están completos y listos para jugar!
         </div>
       ) : shouldShowProgress ? (
         <>
           <div className="mb-4 w-full">
-            <p className="font-medium text-lg">Equipo 1</p>
-            <ProgressBar progress={teamOneProgress} colorClass="bg-blue-500" />
+            <p className="font-medium text-sm">Equipo 1</p>
+            <ProgressBar progress={teamOneProgress} colorClass="bg-blue-300" />
           </div>
           <div className="mb-4 w-full">
-            <p className="font-medium text-lg">Equipo 2</p>
-            <ProgressBar progress={teamTwoProgress} colorClass="bg-green-500" />
+            <p className="font-medium text-sm">Equipo 2</p>
+            <ProgressBar progress={teamTwoProgress} colorClass="bg-lime-600" />
           </div>
           <div className="w-full">
-            <p className="font-medium text-lg">Total</p>
-            <ProgressBar progress={totalProgress} colorClass="bg-purple-500" />
+            <p className="font-medium  text-sm">Total</p>
+            <ProgressBar progress={totalProgress} colorClass="bg-gray-900" />
           </div>
         </>
       ) : null}
