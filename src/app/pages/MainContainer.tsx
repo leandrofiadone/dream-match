@@ -32,8 +32,8 @@ const ProgressSummary: React.FC<{
   const bothTeamsComplete = teamOneComplete && teamTwoComplete
 
   return (
-    <div className="hidden md:flex md:flex-1 md:w-1/3 p-4 bg-white bg-opacity-25 rounded-md shadow-md flex-col items-center justify-center">
-      <div className="mb-4 text-center">
+    <div className="hidden md:flex md:flex-1 md:w-1/3 p-4 bg-white bg-opacity-25 rounded-md shadow-md flex-col items-center justify-center bg-gradient">
+      <div className="mb-4 text-center ">
         <p className="font-bold text-xl">Atc Dream Match ⚽</p>
       </div>
       {bothTeamsComplete ? (

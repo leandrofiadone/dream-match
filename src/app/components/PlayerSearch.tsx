@@ -111,7 +111,7 @@ const PlayerSearch: React.FC<PlayerSearchProps> = ({
   }
 
   return (
-    <div className="p-4">
+    <div className="p-4 ">
       <input
         type="text"
         value={playerName}
@@ -123,7 +123,7 @@ const PlayerSearch: React.FC<PlayerSearchProps> = ({
         onClick={handleSearch}
         disabled={loading}
         className={`mt-2 p-2 border border-gray-300 rounded-md w-full ${
-          loading ? "bg-gray-300" : "bg-blue-500 text-white hover:bg-blue-600"
+          loading ? "bg-gray-300" : "bg-green-700 text-white hover:bg-green-900"
         }`}>
         {loading ? "Loading..." : "Search"}
       </button>
