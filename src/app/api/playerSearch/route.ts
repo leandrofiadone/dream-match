@@ -22,7 +22,13 @@ export async function GET(request: NextRequest) {
         (part) => shortName.includes(part) || fullName.includes(part)
       )
 
-
+      // Log detallado para cada jugador
+      console.log({
+        searchParts: nameParts,
+        shortName,
+        fullName,
+        matchFound
+      })
 
       return matchFound
     })
